@@ -1,4 +1,6 @@
+import 'package:crowdfund_app/style/app_colors.dart';
 import 'package:crowdfund_app/style/app_config.dart';
+import 'package:crowdfund_app/ui/login/login_email.dart';
 import 'package:crowdfund_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -19,9 +21,13 @@ class App extends StatelessWidget with WidgetsBindingObserver {
     /// Material app
     /// Define also [navigatorKey]
     return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+      theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white, primaryColor: AppColors.black),
       home: SplashScreen(),
-      routes: {"/login": (context) => LoginScreen()},
+      routes: {
+        "/login": (context) => LoginScreen(),
+        "/login/email": (context) => EmailLoginPage()
+      },
     );
   }
 }
@@ -35,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 2), () {
-      Navigator.of(context).push(PageRouteBuilder(
+      Navigator.of(context).pushReplacement(PageRouteBuilder(
           pageBuilder: (context, _, __) => LoginScreen(),
           transitionDuration: Duration(milliseconds: 1500)));
     });

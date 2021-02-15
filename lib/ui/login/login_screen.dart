@@ -43,10 +43,13 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 16,
           ),
-          loginWidget("Login with Email", "assets/email.png",
-              boundaryColor: AppColors.fadeColor,
-              backgroundColor: Colors.white,
-              imageHeight: 40),
+          InkWell(
+            onTap: () => goToLoginByEmail(),
+            child: loginWidget("Login with Email", "assets/email.png",
+                boundaryColor: AppColors.fadeColor,
+                backgroundColor: Colors.white,
+                imageHeight: 40),
+          ),
           SizedBox(
             height: AppConfig.screenHeight * 0.024874,
           ),
@@ -74,6 +77,11 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+
+  /// Navigate to Login By [email]
+  void goToLoginByEmail() {
+    Navigator.pushNamed(context, "/login/email");
   }
 
   /// The login widget for logging in using email or google.
