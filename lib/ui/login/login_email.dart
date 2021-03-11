@@ -1,5 +1,5 @@
-import 'package:crowdfund_app/style/app_colors.dart';
-import 'package:crowdfund_app/style/app_config.dart';
+import 'package:crowdfund_app/constants/app_colors.dart';
+import 'package:crowdfund_app/constants/app_config.dart';
 import 'package:flutter/material.dart';
 
 class EmailLoginPage extends StatefulWidget {
@@ -18,14 +18,14 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
     );
   }
 
-  IconData onPasswordVisibleIcon = Icons.visibility_off_rounded;
+  IconData? onPasswordVisibleIcon = Icons.visibility_off_rounded;
   bool passwordVisible = true;
 
   Align emailPasswordWidget() {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        height: AppConfig.screenHeight * 0.5,
+        height: AppConfig.screenHeight! * 0.6,
         width: 320,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,12 +63,12 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                   if (passwordVisible == false)
                     setState(() {
                       passwordVisible = !passwordVisible;
-                      onPasswordVisibleIcon = Icons.visibility_rounded;
+                      onPasswordVisibleIcon = Icons.visibility_off_rounded;
                     });
                   else {
                     setState(() {
                       passwordVisible = !passwordVisible;
-                      onPasswordVisibleIcon = Icons.visibility_off_rounded;
+                      onPasswordVisibleIcon = Icons.visibility_rounded;
                     });
                   }
                 },
@@ -108,11 +108,11 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
   }
 
   Container inputFieldWidget(
-      {String title,
-      TextInputType inputType,
-      VoidCallback onTapSuffixIcon,
+      {String? title,
+      TextInputType? inputType,
+      VoidCallback? onTapSuffixIcon,
       bool isObscureText = false,
-      IconData suffixIcon}) {
+      IconData? suffixIcon}) {
     return Container(
       height: 52,
       width: 300,

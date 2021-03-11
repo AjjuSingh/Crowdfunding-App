@@ -1,5 +1,5 @@
-import 'package:crowdfund_app/style/app_colors.dart';
-import 'package:crowdfund_app/style/app_config.dart';
+import 'package:crowdfund_app/constants/app_colors.dart';
+import 'package:crowdfund_app/constants/app_config.dart';
 import 'package:crowdfund_app/ui/login/login_email.dart';
 import 'package:crowdfund_app/ui/login/login_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +9,14 @@ void main() {
 }
 
 class App extends StatelessWidget with WidgetsBindingObserver {
-  Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
+  Route<dynamic> generateRoute(RouteSettings? settings) {
+    switch (settings!.name) {
       case '/login':
         return CustomPageRoute(builder: (context) => LoginScreen());
+      default:
+        print("Hello");
     }
+    throw NullThrownError;
   }
 
   @override

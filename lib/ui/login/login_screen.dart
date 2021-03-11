@@ -1,5 +1,6 @@
-import 'package:crowdfund_app/style/app_colors.dart';
-import 'package:crowdfund_app/style/app_config.dart';
+import 'package:crowdfund_app/constants/app_colors.dart';
+import 'package:crowdfund_app/constants/app_config.dart';
+
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           SizedBox(
-            height: AppConfig.screenHeight * 0.0541388,
+            height: AppConfig.screenHeight! * 0.0541388,
           ),
           introSliderText([
             "Devoted",
@@ -51,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 imageHeight: 40),
           ),
           SizedBox(
-            height: AppConfig.screenHeight * 0.024874,
+            height: AppConfig.screenHeight! * 0.024874,
           ),
           loginWidget("Login with Google", "assets/google.png",
               boundaryColor: Colors.transparent,
@@ -87,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
   /// The login widget for logging in using email or google.
   Widget loginWidget(String title, String assetIcon,
       {Color boundaryColor = Colors.black,
-      Color backgroundColor,
+      Color? backgroundColor,
       Color textColor = Colors.black,
-      double imageHeight}) {
+      double? imageHeight}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 26),
       width: 334,
@@ -173,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         SizedBox(
-          width: AppConfig.screenWidth * 0.048611,
+          width: AppConfig.screenWidth! * 0.048611,
         ),
         Container(
           width: 6,
@@ -185,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   : AppColors.highlightOneColor.withOpacity(0.5)),
         ),
         SizedBox(
-          width: AppConfig.screenWidth * 0.048611,
+          width: AppConfig.screenWidth! * 0.048611,
         ),
         Container(
           width: 6,
