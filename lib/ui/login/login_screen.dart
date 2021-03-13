@@ -44,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 16,
           ),
-          InkWell(
+          GestureDetector(
             onTap: () => goToLoginByEmail(),
             child: loginWidget("Login with Email", "assets/email.png",
                 boundaryColor: AppColors.fadeColor,
@@ -62,18 +62,24 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 21,
           ),
-          RichText(
-            text: TextSpan(
-                text: "Dont't have an account? ",
-                style:
-                    TextStyle(color: AppColors.highlightOneColor, fontSize: 14),
-                children: [
-                  TextSpan(
-                    text: "Signup",
-                    style: TextStyle(
-                        color: Color(0xFF196084), fontWeight: FontWeight.bold),
-                  )
-                ]),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, "/signup");
+            },
+            child: RichText(
+              text: TextSpan(
+                  text: "Dont't have an account? ",
+                  style: TextStyle(
+                      color: AppColors.highlightOneColor, fontSize: 14),
+                  children: [
+                    TextSpan(
+                      text: "Signup",
+                      style: TextStyle(
+                          color: Color(0xFF196084),
+                          fontWeight: FontWeight.bold),
+                    )
+                  ]),
+            ),
           )
         ],
       ),

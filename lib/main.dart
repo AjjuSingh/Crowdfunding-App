@@ -2,6 +2,7 @@ import 'package:crowdfund_app/constants/app_colors.dart';
 import 'package:crowdfund_app/constants/app_config.dart';
 import 'package:crowdfund_app/ui/login/login_email.dart';
 import 'package:crowdfund_app/ui/login/login_screen.dart';
+import 'package:crowdfund_app/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,7 +30,8 @@ class App extends StatelessWidget with WidgetsBindingObserver {
       home: SplashScreen(),
       routes: {
         "/login": (context) => LoginScreen(),
-        "/login/email": (context) => EmailLoginPage()
+        "/login/email": (context) => EmailLoginPage(),
+        "/signup": (context) => SignUpPage()
       },
     );
   }
