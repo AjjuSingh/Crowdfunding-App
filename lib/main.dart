@@ -4,22 +4,19 @@ import 'package:crowdfund_app/ui/login/login_email.dart';
 import 'package:crowdfund_app/ui/login/login_screen.dart';
 import 'package:crowdfund_app/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
+  // Call this first to make sure that we can mkae other system level calls safely
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Status bar style on android
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle());
+
   runApp(App());
 }
 
-class App extends StatelessWidget with WidgetsBindingObserver {
-  Route<dynamic> generateRoute(RouteSettings? settings) {
-    switch (settings!.name) {
-      case '/login':
-        return CustomPageRoute(builder: (context) => LoginScreen());
-      default:
-        print("Hello");
-    }
-    throw NullThrownError;
-  }
-
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     /// Material app

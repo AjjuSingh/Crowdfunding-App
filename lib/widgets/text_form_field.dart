@@ -1,6 +1,7 @@
 import 'package:crowdfund_app/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
+/// Custom text form field for input fields e.g. Forms
 class VTextFormField extends StatelessWidget {
   final String? title;
   final TextInputType? inputType;
@@ -9,6 +10,7 @@ class VTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final IconData? suffixIcon;
   final Function? validator;
+
   VTextFormField(
       {this.title,
       this.inputType,
@@ -17,6 +19,7 @@ class VTextFormField extends StatelessWidget {
       this.suffixIcon,
       this.controller,
       this.validator});
+
   @override
   Widget build(BuildContext context) {
     return Container(
