@@ -1,13 +1,20 @@
+import 'package:crowdfund_app/main.dart';
+import 'package:crowdfund_app/models/app_model.dart';
+import 'package:crowdfund_app/services/auth_user_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class AppRouterDelegate extends RouterDelegate with ChangeNotifier {
-  AppRouterDelegate();
+  final AppModel appModel;
+  final Authentication authentication;
+  AppRouterDelegate(this.appModel, this.authentication) {
+    appModel.addListener(notifyListeners);
+  }
 
   // Returns a navigator, to match the current app state
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return SizedBox();
   }
 
   @override
@@ -22,6 +29,7 @@ class AppRouterDelegate extends RouterDelegate with ChangeNotifier {
 
   @override
   void dispose() {
+    appModel.removeListener(notifyListeners);
     super.dispose();
   }
 }

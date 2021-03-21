@@ -1,6 +1,10 @@
+import 'package:crowdfund_app/commands/app/authentication_user_command.dart';
 import 'package:crowdfund_app/constants/app_colors.dart';
 import 'package:crowdfund_app/constants/app_config.dart';
+import 'package:crowdfund_app/widgets/mixins/loading_state_mixin.dart';
+import 'package:crowdfund_app/widgets/styled_load_spinner.dart';
 import 'package:crowdfund_app/widgets/text_form_field.dart';
+import 'package:crowdfund_app/widgets/ui_text.dart';
 import 'package:flutter/material.dart';
 import 'package:crowdfund_app/extension_methods.dart';
 
@@ -16,17 +20,45 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
   /// Global key for form
   GlobalKey<FormState> _formState = GlobalKey();
 
+  // //////////////////////////////////////////////////
+  // Handling error texts
+  String _errorText = "";
+  String get errorText => _errorText;
+  set errorText(String errorText) => setState(() => _errorText = errorText);
+  // /////////////////////////////////////////////////////
+
   ///////////////////////////////////////////////////////////////////////////
   /// Controller for text form handling
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
+  TextEditingController? emailController;
+  TextEditingController? passwordController;
+
+  bool isLoading = false;
   ///////////////////////////////////////////////////////////////////////////
   /// Form validator
-  void validateForm() {
+  void validateForm() async {
+    errorText = "";
     if (_formState.currentState!.validate()) {
-      print(emailController.text);
+      setState(() {
+        isLoading = true;
+      });
+
+      bool success = await AuthenticationUserCommand().run(
+          email: emailController!.text,
+          password: passwordController!.text,
+          createNew: false);
+
+      setState(() {
+        isLoading = false;
+      });
+
+      Navigator.pushNamed(context, "/whoareyou");
+
+      if (!success) {
+        errorText = "Sign in failed. Double check your email and password.";
+      }
     }
   }
+
   //////////////////////////////////////////////////////////////////////////
 
   @override
@@ -77,6 +109,9 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
               SizedBox(
                 height: 46,
               ),
+              if (_errorText.isNotEmpty) ...[
+                UiText(errorText, style: TextStyle(color: Colors.red.shade800)),
+              ],
               VTextFormField(
                 title: "Email",
                 inputType: TextInputType.emailAddress,
@@ -124,26 +159,29 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
               SizedBox(
                 height: 18,
               ),
-              GestureDetector(
-                onTap: validateForm,
-                child: Container(
-                    height: 52,
-                    width: 300,
-                    decoration: BoxDecoration(
-                        color: AppColors.materialBlueColor,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 4),
-                              color: Color(0x151F54C3),
-                              blurRadius: 20)
-                        ]),
-                    child: Center(
-                        child: Text(
-                      "Continue",
-                      style: TextStyle(color: Colors.white),
-                    ))),
-              ),
+              // Submit Button
+              isLoading
+                  ? Center(child: StyledLoadSpinner())
+                  : GestureDetector(
+                      onTap: validateForm,
+                      child: Container(
+                          height: 52,
+                          width: 300,
+                          decoration: BoxDecoration(
+                              color: AppColors.materialBlueColor,
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: [
+                                BoxShadow(
+                                    offset: Offset(0, 4),
+                                    color: Color(0x151F54C3),
+                                    blurRadius: 20)
+                              ]),
+                          child: Center(
+                              child: Text(
+                            "Continue",
+                            style: TextStyle(color: Colors.white),
+                          ))),
+                    ),
               SizedBox(
                 height: 25,
               ),

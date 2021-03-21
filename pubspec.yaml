@@ -30,13 +30,15 @@ dependencies:
   cupertino_icons: ^1.0.0
 
   # App storage
-  shared_preferences: ^2.0.4
+  shared_preferences: ^2.0.5
+  path_provider: ^2.0.1
 
   # State management
-  provider: ^4.3.2+2
+  provider: ^5.0.0
   
   # Http
-  dio: ^3.0.10
+  dio: ^4.0.0-prev3
+  http_parser: ^4.0.0-nullsafety
 
   # Font Style
   google_fonts:

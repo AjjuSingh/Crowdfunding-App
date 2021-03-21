@@ -10,15 +10,6 @@ class HttpFactory {
 }
 
 abstract class HttpService {
-  /// /////////////////////////////////////////////////
-  /// Concrete Methods
-  /// //////////////////////////////////////////////////
-
-  // shared setUserId method
-  String? _userId;
-  String get userId => _userId!;
-  set userId(String value) => _userId = value;
-
   /////////////////////////////////////////////////////////
   /// Dio http client setup
   /// Base options and other stuff 👍
@@ -71,7 +62,7 @@ abstract class HttpService {
       // TODO: Pass token to _buildHeaders method
 
       Response response =
-          await dio.get(url, queryParameters: queryParams, options: Options());
+          await dio.get(url!, queryParameters: queryParams, options: Options());
       return response;
     } catch (_) {}
   }

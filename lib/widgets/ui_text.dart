@@ -1,0 +1,27 @@
+import 'package:flutter/material.dart';
+
+class UiText extends StatelessWidget {
+  const UiText(this.data, {Key? key, this.style}) : super(key: key);
+  final String data;
+  final TextStyle? style;
+
+  static Widget rich(TextSpan span, {TextStyle? style}) {
+    return ExcludeFocus(
+        excluding: true,
+        child: SelectableText.rich(
+          span,
+          style: style,
+        ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ExcludeFocus(
+      excluding: true,
+      child: SelectableText(
+        data,
+        style: style,
+      ),
+    );
+  }
+}
