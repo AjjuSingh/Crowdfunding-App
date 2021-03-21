@@ -88,7 +88,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// Navigate to Login By [email]
   void goToLoginByEmail() {
-    Navigator.pushNamed(context, "/login/email");
+    Navigator.pushNamed(
+      context,
+      "/login/email",
+    );
   }
 
   /// The login widget for logging in using email or google.
@@ -138,7 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
       child: PageView.builder(
         itemCount: title.length,
         onPageChanged: (value) {
-          print(value);
           setState(() {
             index = value;
           });

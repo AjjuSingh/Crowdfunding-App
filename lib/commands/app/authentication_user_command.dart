@@ -11,8 +11,9 @@ class AuthenticationUserCommand extends BaseAppCommand {
     AppUser? user;
 
     try {
-      user = await authentication.signIn(
+      var resp = await authentication.signIn(
           email: email, password: password, createAccount: createNew);
+      resp.fold((l) => l, (r) => user = r);
     } on Exception catch (e) {
       safePrint(e.toString());
     }

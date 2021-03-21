@@ -18,8 +18,8 @@ class PreferenceStore {
 
   Future<bool> setCurrentUser(AppUser user) async {
     Map<String, dynamic> json = user.toJson();
-    String user_serialized = jsonEncode(AppUser.fromJson(json));
-    return _prefs.setString("currentUser", user_serialized);
+    String userSerialized = jsonEncode(AppUser.fromJson(json));
+    return _prefs.setString("currentUser", userSerialized);
   }
 
   AppUser get getCurrentUser =>

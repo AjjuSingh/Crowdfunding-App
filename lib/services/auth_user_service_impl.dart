@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:crowdfund_app/_utils/exceptions/bad_request_exception.dart';
 import 'package:crowdfund_app/_utils/safe_print.dart';
 import 'package:crowdfund_app/caching/app_shared_preferences_caching.dart';
 import 'package:crowdfund_app/constants/api_path.dart';
 import 'package:crowdfund_app/models/app_user_model.dart';
 import 'package:crowdfund_app/services/auth_user_service.dart';
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 class AuthenticationServiceImpl extends Authentication {
@@ -34,26 +36,24 @@ class AuthenticationServiceImpl extends Authentication {
   bool? get isSignedIn => _isSignedIn;
 
   @override
-  Future<AppUser> signIn(
+  Future<Either<BadRequestException, AppUser>> signIn(
       {String? email, String? password, bool createAccount = false}) async {
     Dio dio = Dio();
     dio.options = BaseOptions(
-        baseUrl: "http://192.168.56.1:5000/", responseType: ResponseType.json);
+        baseUrl: "http://192.168.50.135:5000/",
+        responseType: ResponseType.json);
     Response? response;
-    if (createAccount) {
-      try {
+    try {
+      if (createAccount) {
         response = await dio.post(ApiPath.createAccount,
             data: {"email": email, "password": password});
-      } catch (e) {}
-    } else {
-      try {
+      } else {
         response = await dio
             .post(ApiPath.signIn, data: {"email": email, "password": password});
-      } on Exception catch (e) {
-        safePrint(e.toString());
       }
+    } on BadRequestException catch (_) {
+      return Left(BadRequestException("Some error occured", true));
     }
-
-    return AppUser.fromJson(response?.data);
+    return Right(AppUser.fromJson(response.data));
   }
 }

@@ -35,6 +35,9 @@ dependencies:
 
   # State management
   provider: ^5.0.0
+
+  # Functional Programming
+  dartz: ^0.10.0-nullsafety.1
   
   # Http
   dio: ^4.0.0-prev3

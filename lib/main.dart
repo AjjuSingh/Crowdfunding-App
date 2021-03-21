@@ -55,6 +55,7 @@ class __AppBootStrapperState extends State<_AppBootStrapper> {
   Widget build(BuildContext context) {
     /// Define also [navigatorKey]
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.white, primaryColor: AppColors.black),
       home: SplashScreen(),

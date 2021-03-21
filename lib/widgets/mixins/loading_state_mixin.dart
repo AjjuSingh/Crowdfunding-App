@@ -6,7 +6,7 @@ mixin LoadingStateMixin<T extends StatefulWidget> on State<T> {
   bool get isLoading => isLoading;
 
   set isLoading(bool isLoading) {
-    if (!mounted) return;
+    if (mounted) return;
     setState(() {
       _isLoading = isLoading;
     });

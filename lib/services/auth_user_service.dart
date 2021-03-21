@@ -1,5 +1,7 @@
+import 'package:crowdfund_app/_utils/exceptions/bad_request_exception.dart';
 import 'package:crowdfund_app/models/app_user_model.dart';
 import 'package:crowdfund_app/services/auth_user_service_impl.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 
 class AuthenticationFactory {
@@ -29,7 +31,7 @@ abstract class Authentication {
   /// SignIn and signOut abstract methods
   // /////////////////////////////////////////////////////
 
-  Future<AppUser> signIn(
+  Future<Either<BadRequestException, AppUser>> signIn(
       {String? email, String? password, bool createAccount = false});
   bool? get isSignedIn;
   set setIsSignedIn(bool? val) {}
