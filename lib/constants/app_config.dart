@@ -4,4 +4,4 @@ class AppConfig {
 }
 
 double kSmallRadius = 5;
-double kPadding = 10;
+double kPadding = 15;

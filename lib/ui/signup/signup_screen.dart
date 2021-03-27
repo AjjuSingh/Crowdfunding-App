@@ -197,16 +197,20 @@ class _SignUpPageState extends State<SignUpPage> {
               createNew: true)
           .then((value) {
         if (value.isRight()) {
+          setState(() {
+            isLoading = false;
+            print(isLoading);
+          });
           Navigator.pushReplacementNamed(context, "/activate",
               arguments: [_emailCtrl!.text]);
         } else {
+          setState(() {
+            isLoading = false;
+            print(isLoading);
+          });
           value.leftMap((l) => ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(l.message!))));
         }
-      });
-
-      setState(() {
-        isLoading = false;
       });
     }
   }
