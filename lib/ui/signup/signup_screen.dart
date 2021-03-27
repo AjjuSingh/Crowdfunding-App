@@ -24,8 +24,6 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  IconData? onPasswordVisibleIcon = Icons.visibility_off_rounded;
-
   bool passwordVisible = true;
   // Global key for form
   GlobalKey<FormState> _formState = GlobalKey();
@@ -74,25 +72,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _passCtrl,
                     title: "Password",
                     inputType: TextInputType.text,
-                    suffixIcon: onPasswordVisibleIcon,
                     validator: (String val) {
                       if (val.isEmpty) {
                         return "Password is required";
                       }
                       return null;
-                    },
-                    onTapSuffixIcon: () {
-                      if (passwordVisible == false)
-                        setState(() {
-                          passwordVisible = !passwordVisible;
-                          onPasswordVisibleIcon = Icons.visibility_off_rounded;
-                        });
-                      else {
-                        setState(() {
-                          passwordVisible = !passwordVisible;
-                          onPasswordVisibleIcon = Icons.visibility_rounded;
-                        });
-                      }
                     },
                     isObscureText: passwordVisible),
               ),
@@ -106,25 +90,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     controller: _confirmPassCtrl,
                     title: "Confirm Password",
                     inputType: TextInputType.text,
-                    suffixIcon: onPasswordVisibleIcon,
                     validator: (val) {
                       if (val != _passCtrl!.text) {
                         return "Password doesn't match";
                       }
                       return null;
-                    },
-                    onTapSuffixIcon: () {
-                      if (passwordVisible == false)
-                        setState(() {
-                          passwordVisible = !passwordVisible;
-                          onPasswordVisibleIcon = Icons.visibility_off_rounded;
-                        });
-                      else {
-                        setState(() {
-                          passwordVisible = !passwordVisible;
-                          onPasswordVisibleIcon = Icons.visibility_rounded;
-                        });
-                      }
                     },
                     isObscureText: passwordVisible),
               ),
@@ -230,13 +200,13 @@ class _SignUpPageState extends State<SignUpPage> {
           Navigator.pushReplacementNamed(context, "/activate",
               arguments: [_emailCtrl!.text]);
         } else {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("Error occured")));
+          value.leftMap((l) => ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(l.message!))));
         }
       });
 
       setState(() {
-        isLoading = true;
+        isLoading = false;
       });
     }
   }

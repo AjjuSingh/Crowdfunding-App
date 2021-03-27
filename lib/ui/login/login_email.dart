@@ -51,7 +51,9 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
         if (value.isRight()) {
           Navigator.pushNamed(context, "/whoareyou");
         } else {
-          errorText = "Sign in failed. Double check your email and password.";
+          value.leftMap((l) {
+            errorText = l.message!;
+          });
         }
       });
 
@@ -263,8 +265,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                 children: [
                   TextSpan(
                     text: "\nSign in to your account",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 16),
+                    style: Theme.of(context).textTheme.bodyText1,
                   )
                 ]),
           )

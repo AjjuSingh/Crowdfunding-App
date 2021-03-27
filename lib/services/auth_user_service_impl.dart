@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:crowdfund_app/_utils/exceptions/bad_request_exception.dart';
 import 'package:crowdfund_app/_utils/safe_print.dart';
 import 'package:crowdfund_app/caching/app_shared_preferences_caching.dart';
@@ -21,7 +19,8 @@ class AuthenticationServiceImpl extends Authentication {
   void init() async {
     dio.options = BaseOptions(
         baseUrl: "http://192.168.50.107:5000/",
-        responseType: ResponseType.json);
+        responseType: ResponseType.json,
+        receiveDataWhenStatusError: true);
     PreferenceStore appPrefs = await PreferenceStore.create();
     if (appPrefs.getToken == null) {
       _isSignedIn = null;
@@ -39,22 +38,27 @@ class AuthenticationServiceImpl extends Authentication {
       {String? email, String? password, bool createAccount = false}) async {
     Response? response;
     try {
+      // Create account if [bool] is true
       if (createAccount) {
-        try {
-          response = await dio.post(ApiPath.createAccount, data: {
-            "email": email,
-            "password": password,
-            "confirmPassword": password
-          });
-        } catch (err) {
-          return Left(PostResponse.fromJson(response!.data));
-        }
+        response = await dio.post(ApiPath.createAccount, data: {
+          "email": email,
+          "password": password,
+          "confirmPassword": password
+        });
       } else {
-        response = await dio
-            .post(ApiPath.signIn, data: {"email": email, "password": password});
+        response = await dio.post(ApiPath.signIn,
+            data: {"email": email, "password": password},
+            options: Options(
+              followRedirects: false,
+              receiveDataWhenStatusError: true,
+              validateStatus: (status) {
+                return status! == 200;
+              },
+            ));
       }
-    } on BadRequestException catch (_) {
-      return Left(PostResponse.fromJson(response!.data));
+    } on DioError catch (err) {
+      safePrint(err.response!.data.toString());
+      return Left(PostResponse.fromJson(err.response!.data));
     }
     return Right(AppUser.fromJson(response.data));
   }
@@ -69,7 +73,9 @@ class AuthenticationServiceImpl extends Authentication {
         options: Options(responseType: ResponseType.json),
         data: {"email": email!, "code": code!},
       );
-    } on BadRequestException catch (_) {}
-    return PostResponse.fromJson(response!.data);
+    } on DioError catch (err) {
+      return PostResponse.fromJson(err.response!.data);
+    }
+    return PostResponse.fromJson(response.data);
   }
 }
