@@ -17,6 +17,8 @@ class WhoAreYou extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.read<AppModel>().reset();
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/login", (route) => false);
         },
         child: Text("Logout"),
       ),

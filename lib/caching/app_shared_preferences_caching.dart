@@ -16,14 +16,19 @@ class PreferenceStore {
 
   String? get getToken => _prefs.getString("token");
 
+  Future<bool> removeToken() async {
+    return _prefs.remove('token');
+  }
+
   Future<bool> setCurrentUser(AppUser user) async {
     Map<String, dynamic> json = user.toJson();
     String userSerialized = jsonEncode(AppUser.fromJson(json));
     return _prefs.setString("currentUser", userSerialized);
   }
 
-  AppUser get getCurrentUser =>
-      AppUser.fromJson(jsonDecode(_prefs.getString("currentUser")!));
+  AppUser get getCurrentUser {
+    return AppUser.fromJson(jsonDecode(_prefs.getString("currentUser")!));
+  }
 
   Future<bool> removeCurrentUser() async {
     return _prefs.remove("currentUser");

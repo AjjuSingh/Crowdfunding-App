@@ -6,6 +6,7 @@ import 'package:crowdfund_app/constants/app_config.dart';
 import 'package:crowdfund_app/models/app_model.dart';
 import 'package:crowdfund_app/routing/app_router.dart';
 import 'package:crowdfund_app/services/auth_user_service.dart';
+import 'package:crowdfund_app/themes.dart';
 import 'package:crowdfund_app/ui/login/login_email.dart';
 import 'package:crowdfund_app/ui/login/login_screen.dart';
 import 'package:crowdfund_app/ui/signup/signup_screen.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'routing/app_route_parser.dart';
+import 'ui/signup/activate_screen.dart';
 import 'ui/test_widget.dart';
 
 void main() {
@@ -56,13 +58,17 @@ class __AppBootStrapperState extends State<_AppBootStrapper> {
     /// Define also [navigatorKey]
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white, primaryColor: AppColors.black),
+      theme: lightThemeData(context),
+      darkTheme: darkThemeData(context),
+      themeMode: ThemeMode.light,
       home: SplashScreen(),
       routes: {
         "/login": (context) => LoginScreen(),
         "/login/email": (context) => EmailLoginPage(),
         "/signup": (context) => SignUpPage(),
+        "/activate": (context) => ActivateAccountPage(),
+
+        /// Testing widget
         "/whoareyou": (context) => WhoAreYou()
       },
     );

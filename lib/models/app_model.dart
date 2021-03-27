@@ -26,8 +26,9 @@ class AppModel extends AbstractModel {
 
   void reset() async {
     PreferenceStore store = await PreferenceStore.create();
-    store.removeCurrentUser();
-    //_currentUser = null;
+    await store.removeCurrentUser();
+    await store.removeToken();
+    _currentUser = null;
     _authentication.token = null;
     print("Reset appmode: currentUser = $_currentUser");
   }

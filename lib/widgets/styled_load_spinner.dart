@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Customised loading indicator
 class StyledLoadSpinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

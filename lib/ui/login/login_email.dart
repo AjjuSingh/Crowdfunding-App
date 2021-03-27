@@ -42,19 +42,22 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
         isLoading = true;
       });
 
-      bool success = await AuthenticationUserCommand().run(
-          email: emailController!.text,
-          password: passwordController!.text,
-          createNew: false);
+      await AuthenticationUserCommand()
+          .run(
+              email: emailController!.text,
+              password: passwordController!.text,
+              createNew: false)
+          .then((value) {
+        if (value.isRight()) {
+          Navigator.pushNamed(context, "/whoareyou");
+        } else {
+          errorText = "Sign in failed. Double check your email and password.";
+        }
+      });
 
       setState(() {
         isLoading = false;
       });
-      if (success) Navigator.pushNamed(context, "/whoareyou");
-
-      if (!success) {
-        errorText = "Sign in failed. Double check your email and password.";
-      }
     }
   }
 
@@ -101,7 +104,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                 key: _formState,
                 child: Container(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Hero(
                         tag: "email",

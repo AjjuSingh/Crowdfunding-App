@@ -1,5 +1,6 @@
 import 'package:crowdfund_app/_utils/exceptions/bad_request_exception.dart';
 import 'package:crowdfund_app/models/app_user_model.dart';
+import 'package:crowdfund_app/models/response/post_response_model.dart';
 import 'package:crowdfund_app/services/auth_user_service_impl.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
@@ -31,10 +32,12 @@ abstract class Authentication {
   /// SignIn and signOut abstract methods
   // /////////////////////////////////////////////////////
 
-  Future<Either<BadRequestException, AppUser>> signIn(
+  Future<Either<PostResponse, AppUser>> signIn(
       {String? email, String? password, bool createAccount = false});
   bool? get isSignedIn;
   set setIsSignedIn(bool? val) {}
+
+  Future<PostResponse> activateAccount({String email, String code});
 
   @mustCallSuper
   Future<void> signOut() async {

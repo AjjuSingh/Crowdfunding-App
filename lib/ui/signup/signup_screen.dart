@@ -1,5 +1,8 @@
+import 'package:crowdfund_app/commands/app/authentication_user_command.dart';
 import 'package:crowdfund_app/constants/app_colors.dart';
 import 'package:crowdfund_app/constants/app_config.dart';
+import 'package:crowdfund_app/extension_methods.dart';
+import 'package:crowdfund_app/widgets/styled_load_spinner.dart';
 import 'package:crowdfund_app/widgets/text_form_field.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +10,8 @@ class SignUpPage extends StatefulWidget {
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
+
+// TODO: Change it to Sliver view to  make it scrollable
 
 class _SignUpPageState extends State<SignUpPage> {
   @override
@@ -22,76 +27,143 @@ class _SignUpPageState extends State<SignUpPage> {
   IconData? onPasswordVisibleIcon = Icons.visibility_off_rounded;
 
   bool passwordVisible = true;
+  // Global key for form
+  GlobalKey<FormState> _formState = GlobalKey();
+
+  // TextEditing Controllers
+  TextEditingController? _emailCtrl = TextEditingController();
+  TextEditingController? _passCtrl = TextEditingController();
+  TextEditingController? _confirmPassCtrl = TextEditingController();
+
+  bool isLoading = false;
 
   Align emailPasswordWidget() {
     return Align(
       alignment: Alignment.center,
-      child: Container(
-        height: AppConfig.screenHeight! * 0.6,
-        width: AppConfig.screenWidth! * 0.8,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 80,
-            ),
-            VTextFormField(
-                title: "Username", inputType: TextInputType.emailAddress),
-            SizedBox(
-              height: 16,
-            ),
-            VTextFormField(
-                title: "Email", inputType: TextInputType.emailAddress),
-            SizedBox(
-              height: 16,
-            ),
-            VTextFormField(
-                title: "Password",
-                inputType: TextInputType.text,
-                suffixIcon: onPasswordVisibleIcon,
-                onTapSuffixIcon: () {
-                  if (passwordVisible == false)
-                    setState(() {
-                      passwordVisible = !passwordVisible;
-                      onPasswordVisibleIcon = Icons.visibility_off_rounded;
-                    });
-                  else {
-                    setState(() {
-                      passwordVisible = !passwordVisible;
-                      onPasswordVisibleIcon = Icons.visibility_rounded;
-                    });
-                  }
-                },
-                isObscureText: passwordVisible),
-            SizedBox(
-              height: 18,
-            ),
-            Container(
-                height: 52,
-                width: 300,
-                decoration: BoxDecoration(
-                    color: AppColors.materialBlueColor,
-                    borderRadius: BorderRadius.circular(5),
-                    boxShadow: [
-                      BoxShadow(
-                          offset: Offset(0, 4),
-                          color: Color(0x151F54C3),
-                          blurRadius: 20)
-                    ]),
-                child: Center(
-                    child: Text(
-                  "Continue",
-                  style: TextStyle(color: Colors.white),
-                ))),
-            SizedBox(
-              height: 25,
-            ),
-            Text(
-              "Forget password?",
-              style:
-                  TextStyle(fontSize: 14, color: AppColors.materialBlueColor),
-            )
-          ],
+      child: Form(
+        key: _formState,
+        child: Container(
+          height: AppConfig.screenHeight! * 0.6,
+          width: AppConfig.screenWidth! * 0.8,
+          child: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 80,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: VTextFormField(
+                    validator: (String val) {
+                      if (!val.isValidEmail()) {
+                        return "Enter valid email";
+                      }
+                      return null;
+                    },
+                    controller: _emailCtrl,
+                    title: "Email",
+                    inputType: TextInputType.emailAddress),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 16,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: VTextFormField(
+                    controller: _passCtrl,
+                    title: "Password",
+                    inputType: TextInputType.text,
+                    suffixIcon: onPasswordVisibleIcon,
+                    validator: (String val) {
+                      if (val.isEmpty) {
+                        return "Password is required";
+                      }
+                      return null;
+                    },
+                    onTapSuffixIcon: () {
+                      if (passwordVisible == false)
+                        setState(() {
+                          passwordVisible = !passwordVisible;
+                          onPasswordVisibleIcon = Icons.visibility_off_rounded;
+                        });
+                      else {
+                        setState(() {
+                          passwordVisible = !passwordVisible;
+                          onPasswordVisibleIcon = Icons.visibility_rounded;
+                        });
+                      }
+                    },
+                    isObscureText: passwordVisible),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 16,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: VTextFormField(
+                    controller: _confirmPassCtrl,
+                    title: "Confirm Password",
+                    inputType: TextInputType.text,
+                    suffixIcon: onPasswordVisibleIcon,
+                    validator: (val) {
+                      if (val != _passCtrl!.text) {
+                        return "Password doesn't match";
+                      }
+                      return null;
+                    },
+                    onTapSuffixIcon: () {
+                      if (passwordVisible == false)
+                        setState(() {
+                          passwordVisible = !passwordVisible;
+                          onPasswordVisibleIcon = Icons.visibility_off_rounded;
+                        });
+                      else {
+                        setState(() {
+                          passwordVisible = !passwordVisible;
+                          onPasswordVisibleIcon = Icons.visibility_rounded;
+                        });
+                      }
+                    },
+                    isObscureText: passwordVisible),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 18,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: GestureDetector(
+                  onTap: _validateForm,
+                  child: isLoading
+                      ? Center(child: StyledLoadSpinner())
+                      : Container(
+                          height: 52,
+                          width: 300,
+                          decoration: BoxDecoration(
+                              color: AppColors.materialBlueColor,
+                              borderRadius: BorderRadius.circular(5),
+                              boxShadow: [
+                                BoxShadow(
+                                    offset: Offset(0, 4),
+                                    color: Color(0x151F54C3),
+                                    blurRadius: 20)
+                              ]),
+                          child: Center(
+                              child: Text(
+                            "Continue",
+                            style: TextStyle(color: Colors.white),
+                          ))),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 25,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -129,17 +201,43 @@ class _SignUpPageState extends State<SignUpPage> {
           RichText(
             text: TextSpan(
                 text: "Sign Up",
-                style: Theme.of(context).textTheme.headline3,
+                style: Theme.of(context).textTheme.headline4,
                 children: [
                   TextSpan(
-                    text: "\nCreate new account",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 16),
-                  )
+                      text: "\nCreate new account",
+                      style: Theme.of(context).textTheme.bodyText2)
                 ]),
           )
         ],
       ),
     );
+  }
+
+  /// Form validator
+  void _validateForm() async {
+    if (_formState.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+
+      AuthenticationUserCommand()
+          .run(
+              email: _emailCtrl!.text,
+              password: _passCtrl!.text,
+              createNew: true)
+          .then((value) {
+        if (value.isRight()) {
+          Navigator.pushReplacementNamed(context, "/activate",
+              arguments: [_emailCtrl!.text]);
+        } else {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("Error occured")));
+        }
+      });
+
+      setState(() {
+        isLoading = true;
+      });
+    }
   }
 }
