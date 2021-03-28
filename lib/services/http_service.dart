@@ -1,3 +1,4 @@
+import 'package:crowdfund_app/caching/app_shared_preferences_caching.dart';
 import 'package:dio/dio.dart';
 
 import 'native_http_service.dart';
@@ -65,5 +66,34 @@ abstract class HttpService {
           await dio.get(url!, queryParameters: queryParams, options: Options());
       return response;
     } catch (_) {}
+  }
+
+  Future<Dio> getApiClient() async {
+    PreferenceStore store = await PreferenceStore.create();
+    var token = store.getToken;
+    dio.interceptors.clear();
+    dio.interceptors.add(InterceptorsWrapper(
+        onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+          // Do something before request is sent
+          options.headers["Authorization"] = "Bearer " + token!;
+        },
+        onResponse: (Response response, ResponseInterceptorHandler) {},
+        onError:
+            (DioError error, ErrorInterceptorHandler interceptorHandler) async {
+          // Do something with response error
+          if (error.response?.statusCode == 403) {
+            dio.interceptors.requestLock.lock();
+            dio.interceptors.responseLock.lock();
+            // RequestOptions options = error.response.request;
+            // FirebaseUser user = await FirebaseAuth.instance.currentUser();
+            // token = await user.getIdToken(refresh: true);
+            // await writeAuthKey(token);
+
+            dio.interceptors.requestLock.unlock();
+            dio.interceptors.responseLock.unlock();
+          }
+        }));
+    dio.options.baseUrl = _baseUrl;
+    return dio;
   }
 }

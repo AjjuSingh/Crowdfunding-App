@@ -1,6 +1,7 @@
 import 'package:crowdfund_app/commands/app/activate_user_account_command.dart';
 import 'package:crowdfund_app/constants/constants.dart';
 import 'package:crowdfund_app/routing/app_navigator.dart';
+import 'package:crowdfund_app/ui/login/login_email.dart';
 import 'package:crowdfund_app/ui/signup/setup_profile_page.dart';
 import 'package:crowdfund_app/widgets/styled_load_spinner.dart';
 import 'package:flutter/material.dart';
@@ -132,7 +133,10 @@ class _ActivateAccountPageState extends State<ActivateAccountPage> {
       isLoading = false;
     });
     if (success) {
-      AppNavigator.push(context, SetupProfilePage());
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => EmailLoginPage()),
+          (route) => false);
       return;
     }
     ScaffoldMessenger.of(context)

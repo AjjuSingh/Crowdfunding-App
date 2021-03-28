@@ -12,6 +12,7 @@ class AuthenticationServiceImpl extends Authentication {
   String? token;
 
   Dio dio = Dio();
+  late PreferenceStore appPrefs;
 
   /// We can use shared preference and check if it doesn't contain false, then
   /// return the object of [User]
@@ -21,7 +22,7 @@ class AuthenticationServiceImpl extends Authentication {
         baseUrl: "http://192.168.50.107:5000/",
         responseType: ResponseType.json,
         receiveDataWhenStatusError: true);
-    PreferenceStore appPrefs = await PreferenceStore.create();
+    appPrefs = await PreferenceStore.create();
     if (appPrefs.getToken == null) {
       _isSignedIn = null;
     } else {
@@ -72,6 +73,35 @@ class AuthenticationServiceImpl extends Authentication {
         ApiPath.activateAccount,
         options: Options(responseType: ResponseType.json),
         data: {"email": email!, "code": code!},
+      );
+    } on DioError catch (err) {
+      return PostResponse.fromJson(err.response!.data);
+    }
+    return PostResponse.fromJson(response.data);
+  }
+
+  @override
+  Future<PostResponse> setupAccount(
+      {String? gender,
+      String? city,
+      String? user_role,
+      Map<String, dynamic>? social_links}) async {
+    Response? response;
+
+    try {
+      print("Token is");
+      print(appPrefs.getToken);
+      response = await dio.patch(
+        ApiPath.profileBasic,
+        options: Options(
+            responseType: ResponseType.json,
+            headers: {"Authorization": "Bearer ${appPrefs.getToken}"}),
+        data: {
+          "gender": gender!,
+          "city": city!,
+          "user_role": user_role!,
+          "social_links": social_links
+        },
       );
     } on DioError catch (err) {
       return PostResponse.fromJson(err.response!.data);

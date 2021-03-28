@@ -9,6 +9,7 @@ import 'package:crowdfund_app/services/auth_user_service.dart';
 import 'package:crowdfund_app/themes.dart';
 import 'package:crowdfund_app/ui/login/login_email.dart';
 import 'package:crowdfund_app/ui/login/login_screen.dart';
+import 'package:crowdfund_app/ui/signup/setup_profile_page.dart';
 import 'package:crowdfund_app/ui/signup/signup_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -87,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
       print(context.read<AppModel>().isSignedIn);
       context.read<AppModel>().currentUser != null
           ? Navigator.of(context).pushReplacement(PageRouteBuilder(
-              pageBuilder: (context, _, __) => WhoAreYou(),
+              pageBuilder: (context, _, __) => SetupProfilePage(),
               transitionDuration: Duration(milliseconds: 1500)))
           : Navigator.of(context).pushReplacement(PageRouteBuilder(
               pageBuilder: (context, _, __) => LoginScreen(),

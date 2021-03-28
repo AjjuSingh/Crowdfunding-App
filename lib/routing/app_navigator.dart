@@ -11,4 +11,8 @@ class AppNavigator {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => child));
   }
+
+  static pustNamedAndReplaceUntil(BuildContext context, String route) {
+    Navigator.pushNamedAndRemoveUntil(context, "/$route", (route) => false);
+  }
 }

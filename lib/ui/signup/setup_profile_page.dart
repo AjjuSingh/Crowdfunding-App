@@ -1,4 +1,6 @@
+import 'package:crowdfund_app/commands/app/setup_user_account_command.dart';
 import 'package:crowdfund_app/constants/constants.dart';
+import 'package:crowdfund_app/models/response/post_response_model.dart';
 import 'package:crowdfund_app/widgets/styled_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -150,10 +152,30 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
     setState(() {
       isLoading = true;
     });
-    if (_form.currentState!.validate()) {}
-    setState(() {
-      isLoading = false;
-    });
+    if (_form.currentState!.validate()) {
+      print(_genderController.text);
+      print(_cityController.text);
+
+      SetupUserAccountCommand().run(
+          gender: _genderController.text,
+          city: _cityController.text,
+          user_role: _roleController.text,
+          social_links: {
+            "github": _socialLinkController.text
+          }).onError((error, stackTrace) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(error.toString()),
+        ));
+      }).then((value) {
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //   content: Text(value?.message),
+        // ));
+        print(value!.message);
+        setState(() {
+          isLoading = false;
+        });
+      });
+    }
   }
 
   Widget _genderSelectorWidget() {
@@ -175,6 +197,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                 setState(() {
                   male = 120;
                   female = 100;
+                  _genderController.text = "Male";
                 });
               },
               child: AnimatedContainer(
@@ -205,6 +228,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                 setState(() {
                   female = 120;
                   male = 100;
+                  _genderController.text = "Female";
                 });
               },
               child: AnimatedContainer(

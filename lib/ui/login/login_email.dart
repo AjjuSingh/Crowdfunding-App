@@ -1,6 +1,8 @@
 import 'package:crowdfund_app/commands/app/authentication_user_command.dart';
 import 'package:crowdfund_app/constants/app_colors.dart';
 import 'package:crowdfund_app/constants/app_config.dart';
+import 'package:crowdfund_app/routing/app_navigator.dart';
+import 'package:crowdfund_app/ui/signup/setup_profile_page.dart';
 import 'package:crowdfund_app/widgets/mixins/loading_state_mixin.dart';
 import 'package:crowdfund_app/widgets/styled_load_spinner.dart';
 import 'package:crowdfund_app/widgets/text_form_field.dart';
@@ -49,7 +51,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
               createNew: false)
           .then((value) {
         if (value.isRight()) {
-          Navigator.pushNamed(context, "/whoareyou");
+          AppNavigator.pushReplacement(context, SetupProfilePage());
         } else {
           value.leftMap((l) {
             errorText = l.message!;

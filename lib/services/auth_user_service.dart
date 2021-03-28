@@ -39,6 +39,12 @@ abstract class Authentication {
 
   Future<PostResponse> activateAccount({String email, String code});
 
+  Future<PostResponse> setupAccount(
+      {String gender,
+      String city,
+      String user_role,
+      Map<String, dynamic> social_links});
+
   @mustCallSuper
   Future<void> signOut() async {
     setIsSignedIn = false;
