@@ -1,6 +1,7 @@
 import 'package:crowdfund_app/commands/app/authentication_user_command.dart';
 import 'package:crowdfund_app/constants/app_colors.dart';
 import 'package:crowdfund_app/constants/app_config.dart';
+import 'package:crowdfund_app/constants/constants.dart';
 import 'package:crowdfund_app/routing/app_navigator.dart';
 import 'package:crowdfund_app/ui/signup/setup_profile_page.dart';
 import 'package:crowdfund_app/widgets/mixins/loading_state_mixin.dart';

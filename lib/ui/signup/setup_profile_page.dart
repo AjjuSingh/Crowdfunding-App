@@ -1,6 +1,8 @@
 import 'package:crowdfund_app/commands/app/setup_user_account_command.dart';
 import 'package:crowdfund_app/constants/constants.dart';
 import 'package:crowdfund_app/models/response/post_response_model.dart';
+import 'package:crowdfund_app/routing/app_navigator.dart';
+import 'package:crowdfund_app/ui/dashboard/dashboard_page.dart';
 import 'package:crowdfund_app/widgets/styled_widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -148,6 +150,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
     );
   }
 
+  /// Validate the form to setup basic details
   void _validateForm() {
     setState(() {
       isLoading = true;
@@ -167,10 +170,11 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
           content: Text(error.toString()),
         ));
       }).then((value) {
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        //   content: Text(value?.message),
-        // ));
-        print(value!.message);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Created profile 🤩"),
+          duration: Duration(seconds: 2),
+        ));
+        AppNavigator.pushReplacementtAndRemoveUntil(context, DashboardPage());
         setState(() {
           isLoading = false;
         });

@@ -40,7 +40,6 @@ class AppModel extends AbstractModel {
 
     store.setToken(tokenToString()!);
     store.setCurrentUser(_currentUser!);
-    //UniversalFile(kFileName).write(saveJson);
   }
 
   Future<void> load() async {

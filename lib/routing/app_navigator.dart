@@ -15,4 +15,9 @@ class AppNavigator {
   static pustNamedAndReplaceUntil(BuildContext context, String route) {
     Navigator.pushNamedAndRemoveUntil(context, "/$route", (route) => false);
   }
+
+  static pushReplacementtAndRemoveUntil(BuildContext context, Widget child) {
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => child), (route) => false);
+  }
 }

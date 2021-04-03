@@ -18,6 +18,7 @@ class AuthenticationServiceImpl extends Authentication {
   /// return the object of [User]
   @override
   void init() async {
+    safePrint("Initialized authentication service");
     dio.options = BaseOptions(
         baseUrl: "http://192.168.50.107:5000/",
         responseType: ResponseType.json,
@@ -91,7 +92,7 @@ class AuthenticationServiceImpl extends Authentication {
     try {
       print("Token is");
       print(appPrefs.getToken);
-      response = await dio.patch(
+      response = await dio.post(
         ApiPath.profileBasic,
         options: Options(
             responseType: ResponseType.json,
@@ -104,6 +105,7 @@ class AuthenticationServiceImpl extends Authentication {
         },
       );
     } on DioError catch (err) {
+      safePrint(err.message);
       return PostResponse.fromJson(err.response!.data);
     }
     return PostResponse.fromJson(response.data);
