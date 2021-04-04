@@ -1,4 +1,5 @@
 import 'package:crowdfund_app/constants/constants.dart';
+import 'package:crowdfund_app/ui/dashboard/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -12,11 +13,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
+  List<Widget> _widgetOptions = <Widget>[
+    HomePage(),
     Text(
       'Index 1: Crowdfund Campaigns',
       style: optionStyle,
@@ -41,9 +39,6 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: Text("Crowdfund Campaigns"),
-        ),
         body: _widgetOptions.elementAt(_selectedIndex),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.white,
@@ -86,22 +81,65 @@ class _DashboardPageState extends State<DashboardPage> {
           child: Icon(Icons.add_rounded),
         ),
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _selectedIndex,
-            onTap: (pos) {
-              _onItemTapped(pos);
-            },
-            items: [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home_rounded), label: ""),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.campaign_rounded), label: ""),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.notification_important), label: ""),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.people_outline_rounded), label: "")
-            ]));
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+            shape: CircularNotchedRectangle(),
+            elevation: 10,
+            notchMargin: 12,
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Spacer(),
+                IconButton(
+                    icon: Icon(
+                      Icons.home,
+                      color: _selectedIndex == 0 ? kActiveIcon : kInactiveIcon,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _selectedIndex = 0;
+                      });
+                    }),
+                Spacer(
+                  flex: 1,
+                ),
+                IconButton(
+                    icon: Icon(Icons.search,
+                        color:
+                            _selectedIndex == 1 ? kActiveIcon : kInactiveIcon),
+                    onPressed: () {
+                      setState(() {
+                        _selectedIndex = 1;
+                      });
+                    }),
+                Spacer(
+                  flex: 5,
+                ),
+                IconButton(
+                    icon: Icon(Icons.notification_important,
+                        color:
+                            _selectedIndex == 2 ? kActiveIcon : kInactiveIcon),
+                    onPressed: () {
+                      setState(() {
+                        _selectedIndex = 2;
+                      });
+                    }),
+                Spacer(
+                  flex: 1,
+                ),
+                IconButton(
+                    icon: Icon(Icons.person,
+                        color:
+                            _selectedIndex == 3 ? kActiveIcon : kInactiveIcon),
+                    onPressed: () {
+                      setState(() {
+                        _selectedIndex = 3;
+                      });
+                    }),
+                Spacer()
+              ],
+            )));
   }
 
   List<Map<String, dynamic>> options = [

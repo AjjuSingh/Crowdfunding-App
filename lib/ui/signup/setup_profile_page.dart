@@ -1,9 +1,8 @@
 import 'package:crowdfund_app/commands/app/setup_user_account_command.dart';
 import 'package:crowdfund_app/constants/constants.dart';
-import 'package:crowdfund_app/models/response/post_response_model.dart';
 import 'package:crowdfund_app/routing/app_navigator.dart';
 import 'package:crowdfund_app/ui/dashboard/dashboard_page.dart';
-import 'package:crowdfund_app/widgets/styled_widgets.dart';
+import 'package:crowdfund_app/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class SetupProfilePage extends StatefulWidget {
