@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:crowdfund_app/_utils/debouncer.dart';
 import 'package:crowdfund_app/_utils/easy_notifier.dart';
-import 'package:crowdfund_app/_utils/universal_file/universal_file.dart';
 import 'package:crowdfund_app/caching/app_shared_preferences_caching.dart';
 import 'package:crowdfund_app/models/app_user_model.dart';
 import 'package:crowdfund_app/services/auth_user_service.dart';

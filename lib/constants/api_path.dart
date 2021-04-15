@@ -8,3 +8,8 @@ class ApiPath {
 
   static String profileBasic = "user";
 }
+
+class APIConstants {
+  static final String prodUrl = "https://aqueous-earth-15157.herokuapp.com/";
+  static final String devUrl = "http://192.168.50.107:5000/";
+}

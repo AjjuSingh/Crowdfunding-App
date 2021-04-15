@@ -3,4 +3,4 @@ class AppConfig {
   static double? screenWidth;
 }
 
-String kAppName = "InstaFund";
+String kAppName = "DCrowdCoin";

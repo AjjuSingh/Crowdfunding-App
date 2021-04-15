@@ -84,7 +84,7 @@ class _DashboardPageState extends State<DashboardPage> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
             shape: CircularNotchedRectangle(),
-            elevation: 10,
+            elevation: 4,
             notchMargin: 12,
             color: Colors.white,
             child: Row(
@@ -117,7 +117,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   flex: 5,
                 ),
                 IconButton(
-                    icon: Icon(Icons.notification_important,
+                    icon: Icon(Icons.notifications,
                         color:
                             _selectedIndex == 2 ? kActiveIcon : kInactiveIcon),
                     onPressed: () {

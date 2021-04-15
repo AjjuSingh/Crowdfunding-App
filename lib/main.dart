@@ -7,6 +7,7 @@ import 'package:crowdfund_app/models/app_model.dart';
 import 'package:crowdfund_app/routing/app_router.dart';
 import 'package:crowdfund_app/services/auth_user_service.dart';
 import 'package:crowdfund_app/themes.dart';
+import 'package:crowdfund_app/ui/dashboard/dashboard_page.dart';
 import 'package:crowdfund_app/ui/login/login_email.dart';
 import 'package:crowdfund_app/ui/login/login_screen.dart';
 import 'package:crowdfund_app/ui/signup/setup_profile_page.dart';
@@ -85,10 +86,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(Duration(seconds: 2), () {
-      print(context.read<AppModel>().isSignedIn);
       context.read<AppModel>().currentUser != null
           ? Navigator.of(context).pushReplacement(PageRouteBuilder(
-              pageBuilder: (context, _, __) => SetupProfilePage(),
+
+              /// todo: Handling of different cases when user has not completed the basic profile setup process
+              pageBuilder: (context, _, __) => DashboardPage(),
               transitionDuration: Duration(milliseconds: 1500)))
           : Navigator.of(context).pushReplacement(PageRouteBuilder(
               pageBuilder: (context, _, __) => LoginScreen(),

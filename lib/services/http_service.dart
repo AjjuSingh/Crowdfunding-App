@@ -11,19 +11,22 @@ class HttpFactory {
 }
 
 abstract class HttpService {
-  /////////////////////////////////////////////////////////
   /// Dio http client setup
   /// Base options and other stuff 👍
-  /////////////////////////////////////////////////////////
   late Response _response;
   late Dio dio;
+
+  /// Development backend URL
   final String _baseUrl = "http://localhost:5000";
+
+  /// In production backend URL
+  final String _prodUrl = "https://aqueous-earth-15157.herokuapp.com";
 
   /// Init method to create instance of Dio
   void init() {
     // Base options
     BaseOptions options = new BaseOptions(
-      baseUrl: "http://localhost:5000",
+      baseUrl: _prodUrl,
     );
     dio = new Dio(options);
   }

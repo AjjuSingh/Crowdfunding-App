@@ -11,18 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  /// TextEditingController for search field
-  late TextEditingController _searchController;
-
   bool _pinned = true;
   bool _snap = false;
   bool _floating = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _searchController = TextEditingController();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +32,11 @@ class _HomePageState extends State<HomePage> {
                 IconThemeData(color: Theme.of(context).iconTheme.color),
             actions: [
               IconButton(
-                  icon: Icon(CupertinoIcons.chat_bubble_text), onPressed: () {})
+                  icon: ImageIcon(
+                    AssetImage("assets/home/ic_chat.png"),
+                    color: Theme.of(context).iconTheme.color,
+                  ),
+                  onPressed: () {})
             ],
             backgroundColor: Colors.white,
           ),
@@ -49,7 +44,7 @@ class _HomePageState extends State<HomePage> {
             padding: EdgeInsets.all(kPadding),
             sliver: SliverText(
               child: Text(
-                "Active campaign",
+                "Ongoing campaigns",
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),

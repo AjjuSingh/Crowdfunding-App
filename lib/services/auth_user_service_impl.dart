@@ -20,7 +20,7 @@ class AuthenticationServiceImpl extends Authentication {
   void init() async {
     safePrint("Initialized authentication service");
     dio.options = BaseOptions(
-        baseUrl: "http://192.168.50.107:5000/",
+        baseUrl: APIConstants.prodUrl,
         responseType: ResponseType.json,
         receiveDataWhenStatusError: true);
     appPrefs = await PreferenceStore.create();

@@ -1,6 +1,5 @@
 import 'package:crowdfund_app/constants/app_colors.dart';
 import 'package:crowdfund_app/constants/app_config.dart';
-import 'package:crowdfund_app/widgets/percent_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -24,10 +23,12 @@ class CampaignItemPage extends StatelessWidget {
                 left: kDefaultPadding, right: kDefaultPadding),
             child: _buildTitle(context),
           ),
-          Padding(
-            padding: kMaterialListPadding.copyWith(
-                left: kDefaultPadding, right: kDefaultPadding),
-            child: _buildDescripiton(context),
+          Expanded(
+            child: Padding(
+              padding: kMaterialListPadding.copyWith(
+                  left: kDefaultPadding, right: kDefaultPadding),
+              child: _buildDescripiton(context),
+            ),
           ),
           Divider(),
           Padding(

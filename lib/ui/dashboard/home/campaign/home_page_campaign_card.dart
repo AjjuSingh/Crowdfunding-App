@@ -6,9 +6,10 @@ class CampaignSmallCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: SizedBox(
-        height: AppConfig.screenHeight! * 0.6,
+      child: Container(
+        height: AppConfig.screenHeight! * 0.65,
         child: ListView.builder(
+            shrinkWrap: true,
             padding: EdgeInsets.only(
               left: kPadding,
             ),

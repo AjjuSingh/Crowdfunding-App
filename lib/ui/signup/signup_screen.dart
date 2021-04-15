@@ -11,8 +11,7 @@ class SignUpPage extends StatefulWidget {
   _SignUpPageState createState() => _SignUpPageState();
 }
 
-// TODO: Change it to Sliver view to  make it scrollable
-
+/// todo: Change it to Sliver view to  make it scrollable
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
