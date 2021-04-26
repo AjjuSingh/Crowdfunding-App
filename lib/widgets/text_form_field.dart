@@ -12,15 +12,20 @@ class VTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final IconData? suffixIcon;
   final Function? validator;
+  final int? maxLine;
+  final bool? enabled;
 
-  VTextFormField(
-      {this.title,
-      this.inputType,
-      this.onTapSuffixIcon,
-      this.isObscureText = false,
-      this.suffixIcon,
-      this.controller,
-      this.validator});
+  VTextFormField({
+    required this.title,
+    required this.inputType,
+    this.onTapSuffixIcon,
+    this.isObscureText = false,
+    this.suffixIcon,
+    required this.controller,
+    required this.validator,
+    this.maxLine,
+    this.enabled,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +35,21 @@ class VTextFormField extends StatelessWidget {
         elevation: 10,
         borderRadius: BorderRadius.circular(kSmallRadius),
         child: TextFormField(
+          focusNode: FocusNode(canRequestFocus: false),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText: isObscureText,
           controller: controller,
           keyboardType: inputType,
           validator: (val) => validator!(val),
+          maxLines: maxLine,
+          enabled: enabled,
+          enableInteractiveSelection: true,
           decoration: InputDecoration(
               suffixIcon:
                   InkWell(onTap: onTapSuffixIcon, child: Icon(suffixIcon)),
-              labelText: title,
-              labelStyle: TextStyle(color: AppColors.black),
+              hintText: title,
               filled: true,
+              labelText: title,
               fillColor: Colors.white,
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,

@@ -7,7 +7,12 @@ ThemeData lightThemeData(BuildContext context) {
   return ThemeData.light().copyWith(
     primaryColor: kPrimaryColor,
     scaffoldBackgroundColor: Colors.white,
-    appBarTheme: appBarTheme,
+    appBarTheme: AppBarTheme(
+        titleTextStyle: TextStyle(color: Colors.black),
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.transparent),
     iconTheme: IconThemeData(color: kContentColorLightTheme),
     textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context)
             .textTheme
@@ -20,6 +25,8 @@ ThemeData lightThemeData(BuildContext context) {
       secondary: kSecondaryColor,
       error: kErrorColor,
     ),
+    inputDecorationTheme:
+        InputDecorationTheme(hintStyle: TextStyle(color: Colors.black)),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.white,
       selectedItemColor: kContentColorLightTheme.withOpacity(0.7),
@@ -36,7 +43,12 @@ ThemeData darkThemeData(BuildContext context) {
   return ThemeData.dark().copyWith(
     primaryColor: kPrimaryColor,
     scaffoldBackgroundColor: kContentColorLightTheme,
-    appBarTheme: appBarTheme,
+    appBarTheme: AppBarTheme(
+        titleTextStyle: TextStyle(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.white),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent),
     iconTheme: IconThemeData(color: kContentColorDarkTheme),
     textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme)
         .apply(bodyColor: kContentColorDarkTheme),
@@ -45,6 +57,8 @@ ThemeData darkThemeData(BuildContext context) {
       secondary: kSecondaryColor,
       error: kErrorColor,
     ),
+    inputDecorationTheme:
+        InputDecorationTheme(hintStyle: TextStyle(color: Color(0xFF121212))),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: kContentColorLightTheme,
       selectedItemColor: Colors.white70,
@@ -54,6 +68,3 @@ ThemeData darkThemeData(BuildContext context) {
     ),
   );
 }
-
-final appBarTheme = AppBarTheme(
-    centerTitle: true, elevation: 0, backgroundColor: Colors.transparent);

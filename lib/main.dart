@@ -69,9 +69,6 @@ class __AppBootStrapperState extends State<_AppBootStrapper> {
         "/login/email": (context) => EmailLoginPage(),
         "/signup": (context) => SignUpPage(),
         "/activate": (context) => ActivateAccountPage(),
-
-        /// Testing widget
-        "/whoareyou": (context) => WhoAreYou()
       },
     );
   }

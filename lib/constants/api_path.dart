@@ -7,6 +7,8 @@ class ApiPath {
   static final String resetPassword = "reset";
 
   static String profileBasic = "user";
+
+  static final String createCampaign = "create/campaign";
 }
 
 class APIConstants {

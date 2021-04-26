@@ -1,4 +1,6 @@
 import 'package:crowdfund_app/constants/constants.dart';
+import 'package:crowdfund_app/routing/app_navigator.dart';
+import 'package:crowdfund_app/ui/dashboard/home/campaign/create_campaign_page.dart';
 import 'package:crowdfund_app/ui/dashboard/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -29,12 +31,6 @@ class _DashboardPageState extends State<DashboardPage> {
     ),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +50,8 @@ class _DashboardPageState extends State<DashboardPage> {
                           itemBuilder: (context, index) {
                             return TextButton(
                               onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: Text(
-                                        "Create a ${options[index]["text"]}")));
+                                AppNavigator.push(
+                                    context, options[index]["widget"]);
                               },
                               child: Row(
                                 children: [
@@ -83,10 +78,11 @@ class _DashboardPageState extends State<DashboardPage> {
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
-            shape: CircularNotchedRectangle(),
-            elevation: 4,
-            notchMargin: 12,
-            color: Colors.white,
+            shape: AutomaticNotchedShape(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14))),
+            elevation: 20,
+            color: Theme.of(context).scaffoldBackgroundColor,
+            notchMargin: 6,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -165,7 +161,7 @@ class _DashboardPageState extends State<DashboardPage> {
         color: AppColors.black,
       ),
       "text": "Start a campaign",
-      "widget": Placeholder()
+      "widget": CreateCampaignPage()
     }
   ];
 }

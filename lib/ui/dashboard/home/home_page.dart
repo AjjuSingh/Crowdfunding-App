@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onPressed: () {})
             ],
-            backgroundColor: Colors.white,
           ),
           SliverPadding(
             padding: EdgeInsets.all(kPadding),
