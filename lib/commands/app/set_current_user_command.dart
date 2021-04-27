@@ -1,7 +1,6 @@
 import 'package:crowdfund_app/_utils/safe_print.dart';
 import 'package:crowdfund_app/commands/commands.dart';
 import 'package:crowdfund_app/models/app_user_model.dart';
-import 'package:flutter/material.dart';
 
 class SetCurrentUserCommand extends BaseAppCommand {
   Future<void> run(AppUser? user) async {
